@@ -427,13 +427,13 @@ namespace QuickFix.DataDictionary
             string type;
             XmlNode node = doc.SelectSingleNode("/fix/@type");
             if (node == null)
-                type = "FIX";//FIXME has to be a better way to do this, but for now, only >=5.0 have type
+                type = "FIX"; //assume any dictionaries that don't have type attribute default to type='FIX'
             else
                 type = node.Value;
             
             
             if (!type.Equals("FIX") && !type.Equals("FIXT"))
-                throw new System.ArgumentException("Type must be FIX of FIXT in cofig");
+                throw new System.ArgumentException("Type must be FIX of FIXT in config");
             Version = String.Format("{0}.{1}.{2}", type, MajorVersion, MinorVersion);
         }
 

@@ -185,7 +185,6 @@ namespace QuickFix
 
         #endregion
 
-        /// FIXME
         public Session(
             Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
@@ -976,7 +975,6 @@ namespace QuickFix
             return DoPossDup(msg);
         }
 
-        /// FIXME
         protected bool DoPossDup(Message msg)
         {
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
@@ -1081,9 +1079,10 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME
+        /// Creates and sends an unsolicited LOGON message specific to this session
+	/// Specific to Initiator
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if the message is successfully sent</returns>
         protected bool GenerateLogon()
         {
             Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
@@ -1107,10 +1106,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME don't do so much operator new here
+        /// Creates and sends a LOGON message in reply to a given Logon message.
+	/// Specific to Acceptors
         /// </summary>
-        /// <param name="heartBtInt"></param>
-        /// <returns></returns>
+        /// <param name="otherLogon">Received Logon in which to respond</param>
+        /// <returns>True if Logon sent successfully</returns>
         protected bool GenerateLogon(Message otherLogon)
         {
             Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
