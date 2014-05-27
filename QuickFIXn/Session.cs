@@ -1532,7 +1532,14 @@ namespace QuickFix
                 }
                 else
                 {
-                    this.Application.ToApp(message, this.SessionID);
+                    try
+                    {
+                        this.Application.ToApp(message, this.SessionID);
+                    }
+                    catch (DoNotSend)
+                    {
+                        return false;
+                    }
                 }
 
                 string messageString = message.ToString();
